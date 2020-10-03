@@ -35,7 +35,10 @@ class Tablero(models.Model):
         return self.nombre
 
     # CONFIGURACIONES EXTRA QUE PUEDEN REALIZARSE SOBRE LA CLASE TABLERO
-    # class Meta:
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['nombre'], name='unique_nombre_tablero'),
+        ]
     #     ordering = ["nombre"]
     #     permissions = (
     #                       ("asignar_equipo", "Puede asignar un usuario al proyecto"),
