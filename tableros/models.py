@@ -11,13 +11,13 @@ class Tablero(models.Model):
         ('Cancelado', 'Cancelado'),
     )
 
-    idTablero = models.AutoField(primary_key=True)
+    id_tablero = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=256)
     descripcion = models.CharField(max_length=256)
     estado = models.CharField(max_length=15, choices=ESTADOS_TABLERO, default='Iniciado')
     visibilidad = models.CharField(max_length=256)
     activo = models.BooleanField(default=True)
-    fechaModificacion = models.DateField(default=datetime.now)
+    fecha_modificacion = models.DateField(default=datetime.now)
 
     # EJEMPLO DE LÓGICA AL GUARDAR/MODIFICAR UN TABLERO
     # def save(self):
@@ -56,9 +56,9 @@ class Usuario(models.Model):
         ('Inactivo', 'Inactivo'),
     )
 
-    idUsuario = models.AutoField(primary_key=True)
-    fechaNacimiento= models.DateField(auto_now=False, auto_now_add=False)
-    fechaRegistro = models.DateField(default=datetime.now)
+    id_usuario = models.AutoField(primary_key=True)
+    fecha_nacimiento= models.DateField(auto_now=False, auto_now_add=False)
+    fecha_registro = models.DateField(default=datetime.now)
     nombre = models.CharField(max_length=256)
     apellido = models.CharField(max_length=256)
     correo = models.CharField(max_length=256)
@@ -84,21 +84,21 @@ class Equipo(models.Model):
         ('Inactivo', 'Inactivo'),
     )
 
-    idEquipo = models.AutoField(primary_key=True)
-    idTablero = models.IntegerField()
-    idUsuario = models.IntegerField()
-    nombreEquipo = models.CharField(max_length=256)
+    id_equipo = models.AutoField(primary_key=True)
+    id_tablero = models.IntegerField()
+    id_usuario = models.IntegerField()
+    nombre_equipo = models.CharField(max_length=256)
     estado = models.CharField(max_length=15, choices=ESTADOS_EQUIPO, default='Activo')
 
 
     # QUE DATO DEVUELVE AL INVOCAR A UNA INSTANCIA DE EQUIPO SIN ACCEDER A UN ATRIBUTO ESPECÍFICO
     def __unicode__(self):
-        return self.nombreEquipo
+        return self.nombre_equipo
 
     # CONFIGURACIONES EXTRA QUE PUEDEN REALIZARSE SOBRE LA CLASE EQUIPO
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['nombreEquipo'], name='unique_nombreEquipo_equipo'),
+            models.UniqueConstraint(fields=['nombre_equipo'], name='unique_nombre_equipo_equipo'),
         ]
 
 class Rol_usuario_tablero(models.Model):
@@ -108,21 +108,21 @@ class Rol_usuario_tablero(models.Model):
         ('Inactivo', 'Inactivo'),
     )
 
-    idRolUsuario = models.AutoField(primary_key=True)
-    idTablero = models.IntegerField()
-    idUsuario = models.IntegerField()
-    idRol = models.IntegerField()
+    id_rol_usuario = models.AutoField(primary_key=True)
+    id_tablero = models.IntegerField()
+    id_usuario = models.IntegerField()
+    id_rol = models.IntegerField()
     estado = models.CharField(max_length=15, choices=ESTADOS_USUARIO, default='Activo')
 
 
     # QUE DATO DEVUELVE AL INVOCAR A UNA INSTANCIA DE Rol_usuario_tablero SIN ACCEDER A UN ATRIBUTO ESPECÍFICO
     def __unicode__(self):
-        return self.idRolUsuario
+        return self.id_rol_usuario
 
     # CONFIGURACIONES EXTRA QUE PUEDEN REALIZARSE SOBRE LA CLASE Rol_usuario_tablero
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['idTablero', 'idUsuario', 'idRol', 'estado'], name='unique_idTableroidUsuarioidRol_Rol_usuario_tablero'),
+            models.UniqueConstraint(fields=['id_tablero', 'id_usuario', 'id_rol', 'estado'], name='unique_idtableroidusuarioidrol_rol_usuario_tablero'),
 
         ]
 
@@ -133,19 +133,19 @@ class Rol(models.Model):
         ('Inactivo', 'Inactivo'),
     )
 
-    idRol = models.AutoField(primary_key=True)
-    tipoRol = models.IntegerField()
+    id_rol = models.AutoField(primary_key=True)
+    tipo_rol = models.IntegerField()
     estado = models.CharField(max_length=15, choices=ESTADOS_ROL, default='Activo')
 
 
     # QUE DATO DEVUELVE AL INVOCAR A UNA INSTANCIA DE Rol SIN ACCEDER A UN ATRIBUTO ESPECÍFICO
     def __unicode__(self):
-        return self.TipoRol
+        return self.tipo_rol
 
     # CONFIGURACIONES EXTRA QUE PUEDEN REALIZARSE SOBRE LA CLASE Rol
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['tipoRol'], name='unique_TipoRol_Rol'),
+            models.UniqueConstraint(fields=['tipo_rol'], name='unique_tipo_rol_Rol'),
 
         ]
 
@@ -156,20 +156,20 @@ class Tarjeta_Usuario(models.Model):
         ('Inactivo', 'Inactivo'),
     )
 
-    idTarjetaUsuario = models.AutoField(primary_key=True)
-    idTarjeta = models.IntegerField()
-    idUsuario = models.IntegerField()
+    id_tarjeta_usuario = models.AutoField(primary_key=True)
+    id_tarjeta = models.IntegerField()
+    id_usuario = models.IntegerField()
     estado = models.CharField(max_length=15, choices=ESTADOS_TARJETA_USUARIO, default='Activo')
 
 
     # QUE DATO DEVUELVE AL INVOCAR A UNA INSTANCIA DE Tarjeta_Usuario SIN ACCEDER A UN ATRIBUTO ESPECÍFICO
     def __unicode__(self):
-        return self.idTarjetaUsuario
+        return self.id_tarjeta_usuario
 
     # CONFIGURACIONES EXTRA QUE PUEDEN REALIZARSE SOBRE LA CLASE Tarjeta_Usuario
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['idTarjeta', 'idUsuario', 'estado'], name='unique_idTarjetaidUsuario_Tarjeta_Usuario'),
+            models.UniqueConstraint(fields=['id_tarjeta', 'id_usuario', 'estado'], name='unique_idtarjetaidusuario_tarjeta_usuario'),
 
         ]
 
@@ -180,22 +180,22 @@ class Tarjeta(models.Model):
         ('Inactivo', 'Inactivo'),
     )
 
-    idTarjeta = models.AutoField(primary_key=True)
-    fechaRegistro = models.DateField(default=datetime.now)
-    fechaLimite= models.DateField(auto_now=False, auto_now_add=False)
-    nombreTarjeta = models.CharField(max_length=256)
-    idUsuario = models.IntegerField()
+    id_tarjeta = models.AutoField(primary_key=True)
+    fecha_registro = models.DateField(default=datetime.now)
+    fecha_limite= models.DateField(auto_now=False, auto_now_add=False)
+    nombre_tarjeta = models.CharField(max_length=256)
+    id_usuario = models.IntegerField()
     estado = models.CharField(max_length=15, choices=ESTADOS_TARJETA, default='Activo')
 
 
     # QUE DATO DEVUELVE AL INVOCAR A UNA INSTANCIA DE Tarjeta SIN ACCEDER A UN ATRIBUTO ESPECÍFICO
     def __unicode__(self):
-        return self.nombreTarjeta
+        return self.nombre_tarjeta
 """
     # CONFIGURACIONES EXTRA QUE PUEDEN REALIZARSE SOBRE LA CLASE Tarjeta
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['idTarjeta', 'idUsuario', 'estado'], name='unique_idTarjetaidUsuario_Tarjeta'),
+            models.UniqueConstraint(fields=['id_tarjeta', 'id_usuario', 'estado'], name='unique_idtarjetaidusuario_tarjeta'),
 
         ]
 """
@@ -207,24 +207,24 @@ class Fases(models.Model):
         ('Inactivo', 'Inactivo'),
     )
 
-    idFases = models.AutoField(primary_key=True)
-    nombreFases = models.CharField(max_length=256)
-    fechaRegistro = models.DateField(default=datetime.now)
-    fechaLimite= models.DateField(auto_now=False, auto_now_add=False)
-    nombreTarjeta = models.CharField(max_length=256)
-    idUsuario = models.IntegerField()
-    idTarjeta = models.IntegerField()
+    id_fases = models.AutoField(primary_key=True)
+    nombre_fases = models.CharField(max_length=256)
+    fecha_registro = models.DateField(default=datetime.now)
+    fecha_limite= models.DateField(auto_now=False, auto_now_add=False)
+    nombre_tarjeta = models.CharField(max_length=256)
+    id_usuario = models.IntegerField()
+    id_tarjeta = models.IntegerField()
     estado = models.CharField(max_length=15, choices=ESTADOS_FASES, default='Activo')
 
 
     # QUE DATO DEVUELVE AL INVOCAR A UNA INSTANCIA DE FASES SIN ACCEDER A UN ATRIBUTO ESPECÍFICO
     def __unicode__(self):
-        return self.nombreFases
+        return self.nombre_fases
 """
     # CONFIGURACIONES EXTRA QUE PUEDEN REALIZARSE SOBRE LA CLASE FASES
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['nombreFases'], name='unique_nombreFases_fases'),
+            models.UniqueConstraint(fields=['nombre_fases'], name='unique_nombrefases_fases'),
 
         ]
 """
