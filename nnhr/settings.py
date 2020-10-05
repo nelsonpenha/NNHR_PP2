@@ -79,9 +79,9 @@ WSGI_APPLICATION = 'nnhr.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'nnhr',
+        'NAME': 'NNHR',
         'USER': 'postgres',
-        'PASSWORD': 'postgres',
+        'PASSWORD': '12345',
         'HOST': 'localhost',
         'PORT': '5432',
     }
