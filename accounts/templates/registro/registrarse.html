@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8">
+  <title>registrarse</title>
+  <link type='text/css'href='{%static "css/plantillaregistrarse.css" %}' rel ='stylesheet'/ >
+</head>
+<body>
+  <div id="login-box">
+    <div class="left-box">
+      <h1> Crear Cuenta </h1>
+      <input type="text" name="username" placeholder="Nombre"/>
+      <input type="text" name="username" placeholder="Apellido"/>
+      <input type="text" name="email" placeholder="Correo" required/>
+      <input type="password" name="password" placeholder="Contraseña" required/>
+      <input type="password" name="password2" placeholder="Repetir contraseña"/>
+      <input type="submit" name="singup-button" placeholder="ENVIAR"/>
+    </div>
+    <div class="right-box">
+      <span class="signinwith">Registrarse con su cuenta de </br>Red Social </span>
+      <button class="red_social facebook">Facebook</button>
+      <button class="red_social twitter">Twitter</button>
+      <button class="red_social google">Google+</button>
+    
+    </div>
+    <div class="divisoria">O</div>
+  </div> 
+</body>
+</html>
+

@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8">
+  <title>recuperar</title>
+  <link type='text/css'href='{%static "css/plantillarecuperar.css" %}' rel ='stylesheet'/ >
+</head>
+<body>
+  <div class="login">
+    <div class="login-screen">
+      <div class="app-title">
+        <h1>Recuperar Contraseña</h1>
+      </div>
+
+      <div class="login-form">
+        <div class="control-group">
+        <input type="text" class="login-field" value="" placeholder="correo" id="login-name">
+        <label class="login-field-icon fui-user" for="login-name"></label>
+        </div>
+
+        <a class="btn btn-primary btn-large btn-block" href="#">ENVIAR</a>
+        <a class="login-link" href="http://127.0.0.1:8000/accounts/login/">Volver al Inicio </a>
+
+      </div>
+    </div>
+  </div>
+</body>
+</html>
