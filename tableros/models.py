@@ -38,6 +38,7 @@ class Tablero(models.Model):
         constraints = [
             models.UniqueConstraint(fields=['nombre'], name='unique_nombre_tablero'),
         ]
+
     #     ordering = ["nombre"]
     #     permissions = (
     #                       ("asignar_equipo", "Puede asignar un usuario al proyecto"),
@@ -47,6 +48,15 @@ class Tablero(models.Model):
     #                       ("registrar_avance_userstory", "Se logea las horas trabajadas y un comentario"),
     #                       ("reportes_generales", "Se puede observar los reportes generales"),
     #                   )
+
+    def as_json(self):
+        return dict(
+            id=self.id_tablero,
+            nombre=self.nombre,
+            descripcion=self.descripcion,
+            activo=self.activo,
+            fecha_modificacion=self.fecha_modificacion.isoformat()
+        )
 
 
 class Usuario(models.Model):

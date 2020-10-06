@@ -34,14 +34,16 @@
 	</nav>
 </header>
 
-<div class="wrapper">
+<main role="main">
+	{% block titulo %}{% endblock %}
+
 	{% block contenido %}{% endblock %}
-</div>
+</main>
 
 <!-- Footer -->
 <footer class="page-footer font-small blue mt-auto">
-	<div class="footer-copyright text-center py-3">© 2020 Copyright:
-		<a href="https://mdbootstrap.com/"> Práctica Profesional II - UC Guairá</a>
+	<div class="footer-copyright text-center py-3">© 2020 Copyright: Práctica Profesional II -
+		<a href="http://guaira.uc.edu.py/"> UC Guairá</a>
 	</div>
 </footer>
 <!-- Footer -->
