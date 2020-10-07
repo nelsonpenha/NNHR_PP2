@@ -18,8 +18,11 @@ from django.urls import path
 
 from django.contrib import admin
 from django.urls import path,include
+from tableros import views
+
 
 urlpatterns = [
+    path('', views.pagina_principal, name='index'),
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path('tableros/', include('tableros.urls')),
