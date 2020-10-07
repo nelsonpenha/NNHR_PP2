@@ -16,9 +16,10 @@ def pagina_principal(request):
 
     tableros_lista = Tablero.objects.all()
 
-    results = [ob.as_json() for ob in tableros_lista]
+    # En el caso de que queramos utilizar JSON para construir nuestros elementos
+    # results = [ob.as_json() for ob in tableros_lista]
 
-    return render(request, 'registro/principal.html', {"tableros": results})
+    return render(request, 'registro/principal.html', {"tableros": tableros_lista})
 
 
 def crear_tablero(request):
