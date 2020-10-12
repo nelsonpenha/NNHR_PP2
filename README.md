@@ -1,4 +1,4 @@
-# Django Project Template
+# Django Project PP2
 
 The clean, fast and right way to start a new Django `1.10.1` powered website.
 

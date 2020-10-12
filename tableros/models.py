@@ -4,8 +4,7 @@ from django.db import models
 
 
 class Tablero(models.Model):
-
-    ESTADOS_TABLERO=(
+    ESTADOS_TABLERO = (
         ('Iniciado', 'Iniciado'),
         ('Finalizado', 'Finalizado'),
         ('Cancelado', 'Cancelado'),
@@ -39,6 +38,7 @@ class Tablero(models.Model):
         constraints = [
             models.UniqueConstraint(fields=['nombre'], name='unique_nombre_tablero'),
         ]
+
     #     ordering = ["nombre"]
     #     permissions = (
     #                       ("asignar_equipo", "Puede asignar un usuario al proyecto"),
@@ -49,15 +49,24 @@ class Tablero(models.Model):
     #                       ("reportes_generales", "Se puede observar los reportes generales"),
     #                   )
 
-class Usuario(models.Model):
+    def as_json(self):
+        return dict(
+            id=self.id_tablero,
+            nombre=self.nombre,
+            descripcion=self.descripcion,
+            activo=self.activo,
+            fecha_modificacion=self.fecha_modificacion.isoformat()
+        )
 
-    ESTADOS_USUARIO=(
+
+class Usuario(models.Model):
+    ESTADOS_USUARIO = (
         ('Activo', 'Activo'),
         ('Inactivo', 'Inactivo'),
     )
 
     id_usuario = models.AutoField(primary_key=True)
-    fecha_nacimiento= models.DateField(auto_now=False, auto_now_add=False)
+    fecha_nacimiento = models.DateField(auto_now=False, auto_now_add=False)
     fecha_registro = models.DateField(default=datetime.now)
     nombre = models.CharField(max_length=256)
     apellido = models.CharField(max_length=256)
@@ -65,7 +74,6 @@ class Usuario(models.Model):
     usuario = models.CharField(max_length=256)
     contrasenha = models.CharField(max_length=256)
     estado = models.CharField(max_length=15, choices=ESTADOS_USUARIO, default='Activo')
-
 
     # QUE DATO DEVUELVE AL INVOCAR A UNA INSTANCIA DE USUARIO SIN ACCEDER A UN ATRIBUTO ESPECÍFICO
     def __unicode__(self):
@@ -77,9 +85,9 @@ class Usuario(models.Model):
             models.UniqueConstraint(fields=['usuario'], name='unique_usuario_usuario'),
         ]
 
-class Equipo(models.Model):
 
-    ESTADOS_EQUIPO=(
+class Equipo(models.Model):
+    ESTADOS_EQUIPO = (
         ('Activo', 'Activo'),
         ('Inactivo', 'Inactivo'),
     )
@@ -89,7 +97,6 @@ class Equipo(models.Model):
     id_usuario = models.IntegerField()
     nombre_equipo = models.CharField(max_length=256)
     estado = models.CharField(max_length=15, choices=ESTADOS_EQUIPO, default='Activo')
-
 
     # QUE DATO DEVUELVE AL INVOCAR A UNA INSTANCIA DE EQUIPO SIN ACCEDER A UN ATRIBUTO ESPECÍFICO
     def __unicode__(self):
@@ -101,9 +108,9 @@ class Equipo(models.Model):
             models.UniqueConstraint(fields=['nombre_equipo'], name='unique_nombre_equipo_equipo'),
         ]
 
-class Rol_usuario_tablero(models.Model):
 
-    ESTADOS_USUARIO=(
+class Rol_usuario_tablero(models.Model):
+    ESTADOS_USUARIO = (
         ('Activo', 'Activo'),
         ('Inactivo', 'Inactivo'),
     )
@@ -114,7 +121,6 @@ class Rol_usuario_tablero(models.Model):
     id_rol = models.IntegerField()
     estado = models.CharField(max_length=15, choices=ESTADOS_USUARIO, default='Activo')
 
-
     # QUE DATO DEVUELVE AL INVOCAR A UNA INSTANCIA DE Rol_usuario_tablero SIN ACCEDER A UN ATRIBUTO ESPECÍFICO
     def __unicode__(self):
         return self.id_rol_usuario
@@ -122,13 +128,14 @@ class Rol_usuario_tablero(models.Model):
     # CONFIGURACIONES EXTRA QUE PUEDEN REALIZARSE SOBRE LA CLASE Rol_usuario_tablero
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['id_tablero', 'id_usuario', 'id_rol', 'estado'], name='unique_idtableroidusuarioidrol_rol_usuario_tablero'),
+            models.UniqueConstraint(fields=['id_tablero', 'id_usuario', 'id_rol', 'estado'],
+                                    name='unique_idtableroidusuarioidrol_rol_usuario_tablero'),
 
         ]
 
-class Rol(models.Model):
 
-    ESTADOS_ROL=(
+class Rol(models.Model):
+    ESTADOS_ROL = (
         ('Activo', 'Activo'),
         ('Inactivo', 'Inactivo'),
     )
@@ -136,7 +143,6 @@ class Rol(models.Model):
     id_rol = models.AutoField(primary_key=True)
     tipo_rol = models.IntegerField()
     estado = models.CharField(max_length=15, choices=ESTADOS_ROL, default='Activo')
-
 
     # QUE DATO DEVUELVE AL INVOCAR A UNA INSTANCIA DE Rol SIN ACCEDER A UN ATRIBUTO ESPECÍFICO
     def __unicode__(self):
@@ -149,9 +155,9 @@ class Rol(models.Model):
 
         ]
 
-class Tarjeta_Usuario(models.Model):
 
-    ESTADOS_TARJETA_USUARIO=(
+class Tarjeta_Usuario(models.Model):
+    ESTADOS_TARJETA_USUARIO = (
         ('Activo', 'Activo'),
         ('Inactivo', 'Inactivo'),
     )
@@ -161,7 +167,6 @@ class Tarjeta_Usuario(models.Model):
     id_usuario = models.IntegerField()
     estado = models.CharField(max_length=15, choices=ESTADOS_TARJETA_USUARIO, default='Activo')
 
-
     # QUE DATO DEVUELVE AL INVOCAR A UNA INSTANCIA DE Tarjeta_Usuario SIN ACCEDER A UN ATRIBUTO ESPECÍFICO
     def __unicode__(self):
         return self.id_tarjeta_usuario
@@ -169,28 +174,30 @@ class Tarjeta_Usuario(models.Model):
     # CONFIGURACIONES EXTRA QUE PUEDEN REALIZARSE SOBRE LA CLASE Tarjeta_Usuario
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['id_tarjeta', 'id_usuario', 'estado'], name='unique_idtarjetaidusuario_tarjeta_usuario'),
+            models.UniqueConstraint(fields=['id_tarjeta', 'id_usuario', 'estado'],
+                                    name='unique_idtarjetaidusuario_tarjeta_usuario'),
 
         ]
 
-class Tarjeta(models.Model):
 
-    ESTADOS_TARJETA=(
+class Tarjeta(models.Model):
+    ESTADOS_TARJETA = (
         ('Activo', 'Activo'),
         ('Inactivo', 'Inactivo'),
     )
 
     id_tarjeta = models.AutoField(primary_key=True)
     fecha_registro = models.DateField(default=datetime.now)
-    fecha_limite= models.DateField(auto_now=False, auto_now_add=False)
+    fecha_limite = models.DateField(auto_now=False, auto_now_add=False)
     nombre_tarjeta = models.CharField(max_length=256)
     id_usuario = models.IntegerField()
     estado = models.CharField(max_length=15, choices=ESTADOS_TARJETA, default='Activo')
 
-
     # QUE DATO DEVUELVE AL INVOCAR A UNA INSTANCIA DE Tarjeta SIN ACCEDER A UN ATRIBUTO ESPECÍFICO
     def __unicode__(self):
         return self.nombre_tarjeta
+
+
 """
     # CONFIGURACIONES EXTRA QUE PUEDEN REALIZARSE SOBRE LA CLASE Tarjeta
     class Meta:
@@ -200,9 +207,9 @@ class Tarjeta(models.Model):
         ]
 """
 
-class Fases(models.Model):
 
-    ESTADOS_FASES=(
+class Fases(models.Model):
+    ESTADOS_FASES = (
         ('Activo', 'Activo'),
         ('Inactivo', 'Inactivo'),
     )
@@ -210,16 +217,17 @@ class Fases(models.Model):
     id_fases = models.AutoField(primary_key=True)
     nombre_fases = models.CharField(max_length=256)
     fecha_registro = models.DateField(default=datetime.now)
-    fecha_limite= models.DateField(auto_now=False, auto_now_add=False)
+    fecha_limite = models.DateField(auto_now=False, auto_now_add=False)
     nombre_tarjeta = models.CharField(max_length=256)
     id_usuario = models.IntegerField()
     id_tarjeta = models.IntegerField()
     estado = models.CharField(max_length=15, choices=ESTADOS_FASES, default='Activo')
 
-
     # QUE DATO DEVUELVE AL INVOCAR A UNA INSTANCIA DE FASES SIN ACCEDER A UN ATRIBUTO ESPECÍFICO
     def __unicode__(self):
         return self.nombre_fases
+
+
 """
     # CONFIGURACIONES EXTRA QUE PUEDEN REALIZARSE SOBRE LA CLASE FASES
     class Meta:

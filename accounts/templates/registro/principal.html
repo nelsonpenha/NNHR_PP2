@@ -1,27 +1,31 @@
-{% load static %}
-<!DOCTYPE html>
-<head>
-  <meta charset="UTF-8">
-  <title>principal</title>
-  <link type='text/css'href='{%static "css/plantillaprincipal.css" %}' rel ='stylesheet'/ >
-</head>
-</head>
-<body>
-<!-- menu -->
-  <div class="menu">
-    <div class="container">
-<!-- menu title -->
-    <ul class="menu-title">
-      <li><a href="#!">Menu</a> </li>
-    </ul>
-      <!-- menu content -->
-    <ul class="menu-content">
-      <li><a href="#!">Inicio</a></li>
-      <li><a href="#!">Tableros</a></li>
-      <li><a href="#!">Equipo</a></li>
-      <li><a href="http://127.0.0.1:8000/accounts/login/">Cerrar Sesión</a></li>
-      </li>
-    </div>
-  </div>
- </body>
-</html>
+{% extends "base.html" %}
+
+{% block titulo %}
+	<div class="container">
+		<h1 class="mt-5">Tableros</h1>
+		<p class="lead">¡Buenas, usuario! 👋 Aquí tiene sus tableros activos para ser visualizados</p>
+	</div>
+{% endblock %}
+
+{% block contenido %}
+	<div class="album py-5 bg-light">
+		<div class="container">
+			<div class="row">
+				{% for item in tableros %}
+					<div class="mt-2 col-md-3">
+						<div class="card">
+							<div class="card-body">
+								<h5 class="card-title">{{ item.nombre }}</h5>
+{#								<h6 class="card-subtitle mb-2 text-muted">{{ item.fecha_modificacion }}</h6>#}
+								<h6 class="card-subtitle mb-2 text-muted">{{ item.fecha_modificacion | date:"c" }}</h6>
+								<p class="card-text">{{ item.descripcion }}</p>
+								<a href="#" class="card-link">Editar</a>
+								<a href="#" class="card-link">Eliminar</a>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+{% endblock %}
