@@ -1,33 +1,15 @@
-{% load static %}
-<!DOCTYPE html>
-<head>
-  <meta charset="UTF-8">
-  <title>login</title>
-  <link type='text/css'href='{%static "css/plantillalogin.css" %}' rel ='stylesheet'/ >
-</head>
-<body>
-  <div class="login">
-    <div class="login-screen">
-      <div class="app-title">
-        <h1>Iniciar Sesión</h1>
-      </div>
 
-      <div class="login-form">
-        <div class="control-group">
-        <input type="text" class="login-field" required="true"value="" placeholder="usuario" id="login-name">
-        <label class="login-field-icon fui-user" for="login-name"></label>
+{% extends "base.html" %}
+
+{% block titulo %}
+    <div class="container">
+        <div class="d-flex justify-content-center">
+        <h1 class="mt-5">Iniciar Sesión</h1>
         </div>
-
-        <div class="control-group">
-        <input type="password" class="login-field" required="true" value="" placeholder="contraseña" id="login-pass">
-        <label class="login-field-icon fui-lock" for="login-pass"></label>
-        </div>
-
-        <a class="btn btn-primary btn-large btn-block" href="http://127.0.0.1:8000/accounts/principal/">INICIAR</a>
-        <a class="login-link" href="http://127.0.0.1:8000/accounts/recuperar/">¿Olvidaste tu contraseña?</a>
-        <a class="login-link" href="http://127.0.0.1:8000/accounts/registrarse/"> Registrarse</a>
-      </div>
     </div>
-  </div>
-</body>
-</html>
+{% endblock %}
+
+{% block contenido %}
+
+
+{% endblock %}

@@ -4,7 +4,8 @@ from django.urls import reverse
 
 from tableros.forms import TableroForm
 from tableros.models import Tablero
-
+def area_trabajoView(request):
+	return render( request,'area_trabajo.html')
 
 def pagina_principal(request):
     """
