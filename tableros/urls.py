@@ -19,4 +19,5 @@ from . import views
 urlpatterns = [
     path('principal/', views.pagina_principal),
     path('crear/', views.crear_tablero),
+    path('area/', views.area_trabajoView),
 ]

@@ -66,7 +66,6 @@ class Usuario(models.Model):
     )
 
     id_usuario = models.AutoField(primary_key=True)
-    fecha_nacimiento = models.DateField(auto_now=False, auto_now_add=False)
     fecha_registro = models.DateField(default=datetime.now)
     nombre = models.CharField(max_length=256)
     apellido = models.CharField(max_length=256)
