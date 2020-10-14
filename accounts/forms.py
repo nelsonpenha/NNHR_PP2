@@ -1,12 +1,12 @@
 from django import forms
 from django.contrib.auth.models import User   # fill in custom user info then save it
 from django.contrib.auth.forms import UserCreationForm
-from django.forms import ModelForm
+from django.forms import ModelForm, Form
 
 from tableros.models import Usuario
 
 
-class RegistroForm(ModelForm):
+class RegistroForm(Form):
 
     class Meta:
         model: Usuario

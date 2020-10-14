@@ -10,10 +10,22 @@
 {% endblock %}
 
 {% block contenido %}
-  <form method="post">
-    {% csrf_token %}
-    {{form.as.p}}
-    <button type="submit">Guardar</button>
-  </form>
+    <div class="d-flex justify-content-center">
+            <form method="post" novalidate>
+                {% for field in registro_form %}
+                    <div class="fieldWrapper form-group" aria-required={% if field.field.required %} "true"
+                        {% else %}"false"{% endif %}>
+                        {{ field.label_tag }}{% if field.field.required %}<span class="required">*</span>
+                        {% endif%}
+                        {{ field }}
+                        {% if field.help_text %}
+                        <p class="help">{{ field.help_text|safe }}</p>
+                        {% endif %}
+                   </div>
+               {% endfor %}
+               
+               <button type="submit">Guardar</button>
+            </form>
+    </div>
 
 {% endblock %}
