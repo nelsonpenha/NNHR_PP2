@@ -47,3 +47,11 @@ def crear_tablero(request):
         tablero_form = TableroForm()
 
     return render(request, 'crear_tablero.html', {'tablero_form': tablero_form})
+
+
+def editar_form(request):
+
+    #edit_tab = Tablero.objects.get(id = id )
+    editar= TableroForm()
+    
+    return render(request,'editar_tablero.html',{'editar':editar})

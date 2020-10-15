@@ -15,8 +15,12 @@ Including another URLconf
 """
 from django.urls import path
 from . import views
-
+from django.conf.urls import url
 urlpatterns = [
     path('principal/', views.pagina_principal),
     path('crear/', views.crear_tablero),
+    path('editar/', views.editar_form),
+    
+    #path('editar/', views.editar_form)
+
 ]
