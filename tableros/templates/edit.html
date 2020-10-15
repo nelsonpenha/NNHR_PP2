@@ -14,14 +14,10 @@
                 <form method="POST">
                     {{ form.as_p }}
                     {% csrf_token %}
-
                     <button type="submit" class="btn btn-primary">Guardar</button>
-
                 </form>
-                
             </div>
         </div>
     </div>
-    <div class="alert alert-success">...</div>
 
 {% endblock %}

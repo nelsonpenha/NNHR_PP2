@@ -61,18 +61,15 @@ def edit(request, cambio_id):
     if request.method == "POST":
         # Actualizamos el formulario con los datos recibidos
         form = TableroForm(request.POST, instance=instancia)
-        # Si el formulario es válido...
+        # Si el formulario es válido
         if form.is_valid():
             # Guardamos el formulario pero sin confirmarlo,
             # así conseguiremos una instancia para manejarla
             instancia = form.save(commit=False)
             # Podemos guardarla cuando queramos
             instancia.save()
-            
             #volvemos al inicio
             return HttpResponseRedirect(reverse('index'))
-    # no usamos else porque deja en blanco el formulario
-    #else:
-        #form = TableroForm()
+   
     # Si llegamos al final renderizamos el formulario
     return render(request, "edit.html", {'form': form})
