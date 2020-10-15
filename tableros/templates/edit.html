@@ -11,17 +11,17 @@
     <div class="container">
         <div class="card card-4">
             <div class="card-body">
-                <form method="post" novalidate>
+                <form method="POST">
+                    {{ form.as_p }}
                     {% csrf_token %}
-                   
 
-                        {{ editar.as_p }}
+                    <button type="submit" class="btn btn-primary">Guardar</button>
 
-                    
-            <button type="submit" class="btn btn-primary">Guardar</button>
-            </form>
+                </form>
+                
+            </div>
         </div>
     </div>
-    </div>
+    <div class="alert alert-success">...</div>
 
 {% endblock %}

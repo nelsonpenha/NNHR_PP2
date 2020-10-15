@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-
+from django.contrib import messages
 from tableros.forms import TableroForm
 from tableros.models import Tablero
 
@@ -49,9 +49,30 @@ def crear_tablero(request):
     return render(request, 'crear_tablero.html', {'tablero_form': tablero_form})
 
 
-def editar_form(request):
 
-    #edit_tab = Tablero.objects.get(id = id )
-    editar= TableroForm()
-    
-    return render(request,'editar_tablero.html',{'editar':editar})
+def edit(request, cambio_id):
+    # Recuperamos la instancia de la persona
+    instancia = Tablero.objects.get(id_tablero=cambio_id)
+
+    # Creamos el formulario con los datos de la instancia
+    form = TableroForm(instance=instancia)
+
+    # Comprobamos si se ha enviado el formulario
+    if request.method == "POST":
+        # Actualizamos el formulario con los datos recibidos
+        form = TableroForm(request.POST, instance=instancia)
+        # Si el formulario es válido...
+        if form.is_valid():
+            # Guardamos el formulario pero sin confirmarlo,
+            # así conseguiremos una instancia para manejarla
+            instancia = form.save(commit=False)
+            # Podemos guardarla cuando queramos
+            instancia.save()
+            
+            #volvemos al inicio
+            return HttpResponseRedirect(reverse('index'))
+    # no usamos else porque deja en blanco el formulario
+    #else:
+        #form = TableroForm()
+    # Si llegamos al final renderizamos el formulario
+    return render(request, "edit.html", {'form': form})
