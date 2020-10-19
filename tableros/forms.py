@@ -9,7 +9,7 @@ class TableroForm(ModelForm):
 
     class Meta:
         model = Tablero
-        fields = ['nombre', 'descripcion', 'estado']
+        fields = ['nombre', 'descripcion', 'visibilidad', 'estado']
         widgets = {
             'nombre': forms.TextInput(
                 attrs={
@@ -20,6 +20,12 @@ class TableroForm(ModelForm):
                 attrs={
                     'rows': 2,
                     'class': 'form-control col-lg-6'
+                }
+            ),
+            'visibilidad': forms.Select(
+                choices=Tablero.ESTADOS_VISIBILIDAD,
+                attrs={
+                    'class': 'form-control w-50'
                 }
             ),
             'estado': forms.Select(
