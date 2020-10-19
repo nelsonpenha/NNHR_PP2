@@ -14,12 +14,19 @@ def pagina_principal(request):
     :return: lista de tipo @Tablero
     """
 
+    # Verifica si se recibe un mensaje para desplegar
+    message = None
+    if 'form_message' in request.session:
+        message = request.session['form_message']
+        del request.session['form_message']
+        messages.success(request, message)
+
     tableros_lista = Tablero.objects.all()
 
     # En el caso de que queramos utilizar JSON para construir nuestros elementos
     # results = [ob.as_json() for ob in tableros_lista]
 
-    return render(request, 'registro/principal.html', {"tableros": tableros_lista})
+    return render(request, 'registro/principal.html', {"tableros": tableros_lista, "message": message})
 
 
 def crear_tablero(request):
@@ -49,7 +56,6 @@ def crear_tablero(request):
     return render(request, 'crear_tablero.html', {'tablero_form': tablero_form})
 
 
-
 def edit(request, cambio_id):
     # Recuperamos la instancia de la persona
     instancia = Tablero.objects.get(id_tablero=cambio_id)
@@ -68,6 +74,10 @@ def edit(request, cambio_id):
             instancia = form.save(commit=False)
             # Podemos guardarla cuando queramos
             instancia.save()
+
+            # pasamos el mensaje de guardado con éxito al request
+            request.session['form_message'] = "Guardado exitosamente"
+
             #volvemos al inicio
             return HttpResponseRedirect(reverse('index'))
    

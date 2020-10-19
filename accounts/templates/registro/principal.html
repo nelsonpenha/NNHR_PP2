@@ -8,6 +8,9 @@
 {% endblock %}
 
 {% block contenido %}
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
 	<div class="album py-5 bg-light">
 		<div class="container">
 			<div class="row">
