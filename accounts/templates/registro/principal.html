@@ -23,7 +23,7 @@
 								<h6 class="card-subtitle mb-2 text-muted">{{ item.fecha_modificacion | date:"c" }}</h6>
 								<p class="card-text">{{ item.descripcion }}</p>
 								<a href="/tableros/edit/{{ item.id_tablero }}" class="card-link">Editar</a>
-								<a href="#" class="card-link">Eliminar</a>
+								<a href="/tableros/eliminarTablero/{{ item.id_tablero }}" class="card-link">Eliminar</a>
 							</div>
 						</div>
 					</div>
