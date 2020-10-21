@@ -45,13 +45,8 @@ def crear_tablero(request):
         if tablero_form.is_valid():
             print('Datos validos')
             tablero = tablero_form.save(commit=False)
-            if(3 < len(tablero.nombre) <= 256 and 3 < len(tablero.descripcion) <= 256):
-             #   tablero.visibilidad = 'Privado'
-                tablero.save()
-                return HttpResponseRedirect(reverse('index'))
-                # tablero_form = TableroForm()
-                # return render(request, 'crear_tablero.html', {'tablero_form': tablero_form})
-
+            tablero.save()
+            return HttpResponseRedirect(reverse('index'))
     else:
         tablero_form = TableroForm()
 
