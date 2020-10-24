@@ -19,11 +19,14 @@
 						<div class="card">
 							<div class="card-body">
 								<h5 class="card-title">{{ item.nombre }}</h5>
-{#								<h6 class="card-subtitle mb-2 text-muted">{{ item.fecha_modificacion }}</h6>#}
 								<h6 class="card-subtitle mb-2 text-muted">{{ item.fecha_modificacion | date:"c" }}</h6>
 								<p class="card-text">{{ item.descripcion }}</p>
 								<a href="/tableros/edit/{{ item.id_tablero }}" class="card-link">Editar</a>
-								<a href="/tableros/eliminarTablero/{{ item.id_tablero }}" class="card-link">Eliminar</a>
+								<a class="card-link" data-toggle="modal" data-target="#borrarTablero"
+								   id="eliminar"
+								   data-id="{{ item.id_tablero }}"
+								   data-nombre="{{ item.nombre }}"
+								   data-url-borrar="{% url 'eliminar-tablero' eliminarId=item.id_tablero %}">Eliminar</a>
 							</div>
 						</div>
 					</div>
@@ -31,4 +34,51 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Modal de confirmacion de borrar de tablero -->
+	<div class="modal" id="borrarTablero" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">El titulo no importa. (porque lo cambiamos con jquery)</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p>El cuerpo no importa. (porque lo cambiamos con jquery)</p>
+				</div>
+				<div class="modal-footer">
+					<a data-dismiss="modal" class="btn btn-secondary" role="button" aria-pressed="true">Cancelar</a>
+					<a href="#" class="btn btn-primary" role="button" aria-pressed="true" id="confirmarBorrar">
+						Confirmar
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block jquery %}
+	<script>
+		// Espera que la página cargue (importante usando jquery)
+        $(document).ready(function () {
+            // Cuando se triggerea el evento de mostrar modal
+            $('#borrarTablero').on('show.bs.modal', function (event) {
+                // Guarda el botón en una variable
+                let button = $(event.relatedTarget);
+                // Estira los datos necesarios de ese boton
+                let nombre = button.data('nombre');
+                let borrarUrl = button.data('url-borrar')
+
+	            // Para este ejemplo no solo editamos el cuerpo y la url de un boton sino el titulo también
+	            let modal = $(this)
+	            modal.find('.modal-title').text('Eliminar tablero')
+                modal.find('.modal-body').text('¿Está seguro de borrar el tablero ' + nombre + '?')
+	            modal.find('#confirmarBorrar').attr("href", borrarUrl)
+            })
+        });
+	</script>
+
 {% endblock %}
