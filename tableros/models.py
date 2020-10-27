@@ -23,6 +23,7 @@ class Tablero(models.Model):
     activo = models.BooleanField(default=True)
     fecha_modificacion = models.DateField(default=datetime.now)
 
+
     # EJEMPLO DE LÓGICA AL GUARDAR/MODIFICAR UN TABLERO
     # def save(self):
     #     from datetime import timedelta
@@ -222,10 +223,8 @@ class Fases(models.Model):
     id_fases = models.AutoField(primary_key=True)
     nombre_fases = models.CharField(max_length=256)
     fecha_registro = models.DateField(default=datetime.now)
-    fecha_limite = models.DateField(auto_now=False, auto_now_add=False)
-    nombre_tarjeta = models.CharField(max_length=256)
     id_usuario = models.IntegerField()
-    id_tarjeta = models.IntegerField()
+    id_tablero = models.ForeignKey(Tablero,on_delete=models.CASCADE)
     estado = models.CharField(max_length=15, choices=ESTADOS_FASES, default='Activo')
 
     # QUE DATO DEVUELVE AL INVOCAR A UNA INSTANCIA DE FASES SIN ACCEDER A UN ATRIBUTO ESPECÍFICO

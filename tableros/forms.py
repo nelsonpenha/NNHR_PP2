@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 from django import forms
 
-from tableros.models import Tablero
+from tableros.models import Tablero, Fases
 
 
 class TableroForm(ModelForm):
@@ -55,4 +55,20 @@ class TableroForm(ModelForm):
             'estado': {
                 'required': requiredMessage,
             }
+        }
+
+
+class FasesForm(ModelForm):
+    # descripcion = forms.CharField(widget=forms.Textarea(attrs={'rows': 2}))
+
+    class Meta:
+        model = Fases
+        fields = ['nombre_fases']
+        widgets = {
+            'nombre': forms.TextInput(
+                attrs={
+                    'class': 'form-control col-lg-6'
+                }
+            ),
+
         }

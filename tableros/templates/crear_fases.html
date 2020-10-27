@@ -2,7 +2,7 @@
 
 {% block titulo %}
     <div class="container">
-        <h1 class="mt-5">Editar Tablero</h1>
+        <h1 class="mt-5">Fases Tablero</h1>
     </div>
 {% endblock %}
 
@@ -12,6 +12,7 @@
         <div class="card card-4">
             <div class="card-body">
                 <form method="POST">
+                    {% csrf_token %}
                     {% for field in form %}
                         <div class="fieldWrapper form-group" aria-required={% if field.field.required %} "true"
                         {% else %}"false"{% endif %}>
