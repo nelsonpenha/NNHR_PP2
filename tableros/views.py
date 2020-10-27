@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib import messages
-from tableros.forms import TableroForm
+from tableros.forms import TableroForm, FasesForm
 from tableros.models import Tablero
 
 
@@ -81,8 +81,28 @@ def edit(request, cambio_id):
     # Si llegamos al final renderizamos el formulario
     return render(request, "edit.html", {'form': form})
 
+
 def eliminarTablero(request, eliminarId):
     tableroEliminar = Tablero.objects.get(id_tablero = eliminarId)
     tableroEliminar.activo = False
     tableroEliminar.save()
     return HttpResponseRedirect(reverse('index'))
+
+
+def crear_fases(request,fases_id):
+    # Recuperamos la instancia
+    instancia_fase = Tablero.objects.get(id_tablero=fases_id)
+    id_valor=instancia_fase.id_tablero
+    if request.method == 'POST':
+        fases_form = FasesForm(request.POST)
+        print('Estoy almacenando')
+        if fases_form.is_valid():
+            print('Datos validos')
+            fases = fases_form.save(commit=False)
+            fases.id_usuario ='1'
+            fases.id_tablero = instancia_fase
+            fases.save()
+            return HttpResponseRedirect(reverse('index'))
+    else:
+        form = FasesForm()
+    return render(request, "crear_fases.html", {'form': form})
