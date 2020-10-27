@@ -12,6 +12,7 @@
         <div class="card card-4">
             <div class="card-body">
                 <form method="POST">
+                    {% csrf_token %}
                     {% for field in form %}
                         <div class="fieldWrapper form-group" aria-required={% if field.field.required %} "true"
                         {% else %}"false"{% endif %}>
