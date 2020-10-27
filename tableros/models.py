@@ -10,11 +10,16 @@ class Tablero(models.Model):
         ('Cancelado', 'Cancelado'),
     )
 
+    ESTADOS_VISIBILIDAD = (
+        ('Privado', 'Privado'),
+        ('Público', 'Público'),
+    )
+
     id_tablero = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=256)
     descripcion = models.CharField(max_length=256)
     estado = models.CharField(max_length=15, choices=ESTADOS_TABLERO, default='Iniciado')
-    visibilidad = models.CharField(max_length=256)
+    visibilidad = models.CharField(max_length=15, choices=ESTADOS_VISIBILIDAD, default='Privado')
     activo = models.BooleanField(default=True)
     fecha_modificacion = models.DateField(default=datetime.now)
 
