@@ -21,7 +21,7 @@ def pagina_principal(request):
         del request.session['form_message']
         messages.success(request, message)
 
-    tableros_lista = Tablero.objects.all()
+    tableros_lista = Tablero.objects.filter(activo=True)
 
     # En el caso de que queramos utilizar JSON para construir nuestros elementos
     # results = [ob.as_json() for ob in tableros_lista]
@@ -80,6 +80,12 @@ def edit(request, cambio_id):
 
             #volvemos al inicio
             return HttpResponseRedirect(reverse('index'))
-   
+
     # Si llegamos al final renderizamos el formulario
     return render(request, "edit.html", {'form': form})
+
+def eliminarTablero(request, eliminarId):
+    tableroEliminar = Tablero.objects.get(id_tablero = eliminarId)
+    tableroEliminar.activo = False
+    tableroEliminar.save()
+    return HttpResponseRedirect(reverse('index'))

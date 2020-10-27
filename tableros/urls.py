@@ -15,9 +15,10 @@ Including another URLconf
 """
 from django.urls import path
 from . import views
-from django.conf.urls import url
+
 urlpatterns = [
     path('principal/', views.pagina_principal, name='principal'),
     path('crear/', views.crear_tablero, name='crear'),
     path('edit/<int:cambio_id>', views.edit, name='editar'),
+    path('eliminarTablero/<int:eliminarId>', views.eliminarTablero, name='eliminar-tablero'),
 ]
