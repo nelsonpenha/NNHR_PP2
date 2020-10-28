@@ -1,7 +1,7 @@
 from django.test import SimpleTestCase
 from django.urls import reverse, resolve
 
-from tableros.views import pagina_principal, crear_tablero, edit
+from tableros.views import pagina_principal, crear_tablero, edit, crear_tarjeta
 
 
 class TestUrls(SimpleTestCase):
@@ -17,3 +17,8 @@ class TestUrls(SimpleTestCase):
     def test_edit_tablero_url_works(self):
         url = reverse('editar', args=[1])
         self.assertEquals(resolve(url).func, edit)
+
+    def test_crear_tarjeta_url_works(self):
+        url = reverse('crear_tarjeta', args=[1])
+        self.assertEquals(resolve(url).func, crear_tarjeta)
+
