@@ -28,7 +28,7 @@
 								   data-nombre="{{ item.nombre }}"
 								   data-url-borrar="{% url 'eliminar-tablero' eliminarId=item.id_tablero %}">Eliminar</a>
 								<a href="/tableros/crear_fases/{{ item.id_tablero }}" class="card-link">Ver</a>
-
+								<a href="/tableros/crear_tarjeta/{{ item.id_tablero }}" class="card-link">Crear tarjeta</a>
 							</div>
 						</div>
 					</div>
