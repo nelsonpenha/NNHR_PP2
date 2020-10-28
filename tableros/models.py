@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from django.db import models
+from django.core.exceptions import ValidationError
 
 
 class Tablero(models.Model):
@@ -166,6 +167,7 @@ class Tarjeta_Usuario(models.Model):
     ESTADOS_TARJETA_USUARIO = (
         ('Activo', 'Activo'),
         ('Inactivo', 'Inactivo'),
+
     )
 
     id_tarjeta_usuario = models.AutoField(primary_key=True)
@@ -190,18 +192,30 @@ class Tarjeta(models.Model):
     ESTADOS_TARJETA = (
         ('Activo', 'Activo'),
         ('Inactivo', 'Inactivo'),
+        ('Pendiente', 'Pendiente'),
     )
 
     id_tarjeta = models.AutoField(primary_key=True)
     fecha_registro = models.DateField(default=datetime.now)
     fecha_limite = models.DateField(auto_now=False, auto_now_add=False)
     nombre_tarjeta = models.CharField(max_length=256)
+    descripcion = models.CharField(max_length=256)
     id_usuario = models.IntegerField()
+    id_tablero = models.ForeignKey(Tablero, on_delete=models.CASCADE)
     estado = models.CharField(max_length=15, choices=ESTADOS_TARJETA, default='Activo')
 
     # QUE DATO DEVUELVE AL INVOCAR A UNA INSTANCIA DE Tarjeta SIN ACCEDER A UN ATRIBUTO ESPECÍFICO
     def __unicode__(self):
         return self.nombre_tarjeta
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super(Tarjeta, self).save(*args, **kwargs)
+
+    def clean_end_time(self):
+        if self.fecha_limite < self.fecha_registro:
+            raise ValidationError('La fecha limite debe ser mayor a la de creación')
+
 
 
 """
@@ -230,6 +244,8 @@ class Fases(models.Model):
     # QUE DATO DEVUELVE AL INVOCAR A UNA INSTANCIA DE FASES SIN ACCEDER A UN ATRIBUTO ESPECÍFICO
     def __unicode__(self):
         return self.nombre_fases
+
+
 
 
 """
