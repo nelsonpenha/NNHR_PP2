@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib import messages
-from tableros.forms import TableroForm, FasesForm
+from tableros.forms import TableroForm, FasesForm, TarjetaForm
 from tableros.models import Tablero
 
 
@@ -69,6 +69,7 @@ def edit(request, cambio_id):
             # Guardamos el formulario pero sin confirmarlo,
             # así conseguiremos una instancia para manejarla
             instancia = form.save(commit=False)
+            print('Estoy almacenando')
             # Podemos guardarla cuando queramos
             instancia.save()
 
@@ -106,3 +107,20 @@ def crear_fases(request,fases_id):
     else:
         form = FasesForm()
     return render(request, "crear_fases.html", {'form': form})
+
+def crear_tarjeta(request, tarjeta_id):
+
+    crear_tarjeta = Tablero.objects.get(id_tablero=tarjeta_id)
+    if request.method == 'POST':
+        tarjeta_form =TarjetaForm(request.POST)
+        if tarjeta_form.is_valid():
+            print('Datos validos')
+            card = tarjeta_form.save(commit=False)
+            card.id_usuario='1'
+            card.id_tablero = crear_tarjeta
+            card.save()
+            return HttpResponseRedirect(reverse('index'))
+    else:
+        tarjeta_form = TarjetaForm()
+
+    return render(request, 'crear_tarjeta.html', {'tarjeta_form': tarjeta_form})

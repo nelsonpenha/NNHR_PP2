@@ -166,6 +166,7 @@ class Tarjeta_Usuario(models.Model):
     ESTADOS_TARJETA_USUARIO = (
         ('Activo', 'Activo'),
         ('Inactivo', 'Inactivo'),
+
     )
 
     id_tarjeta_usuario = models.AutoField(primary_key=True)
@@ -190,13 +191,16 @@ class Tarjeta(models.Model):
     ESTADOS_TARJETA = (
         ('Activo', 'Activo'),
         ('Inactivo', 'Inactivo'),
+        ('Pendiente', 'Pendiente'),
     )
 
     id_tarjeta = models.AutoField(primary_key=True)
     fecha_registro = models.DateField(default=datetime.now)
     fecha_limite = models.DateField(auto_now=False, auto_now_add=False)
     nombre_tarjeta = models.CharField(max_length=256)
+    descripcion = models.CharField(max_length=256)
     id_usuario = models.IntegerField()
+    id_tablero = models.ForeignKey(Tablero, on_delete=models.CASCADE)
     estado = models.CharField(max_length=15, choices=ESTADOS_TARJETA, default='Activo')
 
     # QUE DATO DEVUELVE AL INVOCAR A UNA INSTANCIA DE Tarjeta SIN ACCEDER A UN ATRIBUTO ESPECÍFICO
