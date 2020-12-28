@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 from django import forms
 
-from tableros.models import Tablero, Fases
+from tableros.models import Tablero, Fases, Tarjeta
 
 
 class TableroForm(ModelForm):
@@ -66,6 +66,21 @@ class FasesForm(ModelForm):
         fields = ['nombre_fases']
         widgets = {
             'nombre': forms.TextInput(
+                attrs={
+                    'class': 'form-control col-lg-6'
+                }
+            ),
+
+        }
+class TarjetasForm(ModelForm):
+
+    # descripcion = forms.CharField(widget=forms.Textarea(attrs={'rows': 2}))
+
+    class Meta:
+        model = Tarjeta
+        fields = ['nombre_tarjeta']
+        widgets = {
+            'nombre_tarjeta': forms.TextInput(
                 attrs={
                     'class': 'form-control col-lg-6'
                 }

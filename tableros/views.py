@@ -2,8 +2,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib import messages
-from tableros.forms import TableroForm, FasesForm
-from tableros.models import Tablero
+from tableros.forms import TableroForm, FasesForm,TarjetasForm
+from tableros.models import Tablero, Fases
 
 
 def pagina_principal(request):
@@ -91,6 +91,7 @@ def eliminarTablero(request, eliminarId):
 
 def crear_fases(request,fases_id):
     # Recuperamos la instancia
+    list_fase = Fases.objects.all()
     instancia_fase = Tablero.objects.get(id_tablero=fases_id)
     id_valor=instancia_fase.id_tablero
     if request.method == 'POST':
@@ -103,6 +104,16 @@ def crear_fases(request,fases_id):
             fases.id_tablero = instancia_fase
             fases.save()
             return HttpResponseRedirect(reverse('index'))
+            #return HttpResponseRedirect(reverse(lista))
     else:
         form = FasesForm()
-    return render(request, "crear_fases.html", {'form': form})
+    return render(request, "listar_fases.html", {'form': form,'listar_F': list_fase})
+
+def listar_fas(request):
+
+    list_fase = Fases.objects.all()
+
+    return render(request, "ejemplo_listF.html", {'listar_F': list_fase})
+
+
+
