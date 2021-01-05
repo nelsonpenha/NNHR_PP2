@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
@@ -6,6 +7,7 @@ from tableros.forms import TableroForm, FasesForm
 from tableros.models import Tablero
 
 
+@login_required
 def pagina_principal(request):
     """
     Obtiene la lista completa de tableros registrados en el sistema y despliega en la vista principal
