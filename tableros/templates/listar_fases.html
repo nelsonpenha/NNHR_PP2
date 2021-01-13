@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+	<div class="container">
+		{% for item in lista_tablero_id %}
+			<h1 align="center">{{ item.nombre }}</h1>
+		{% endfor %}
+		<p class="lead">¡Buenas, usuario! 👋 Aquí tiene las fases activas del tablero</p>
+	</div>
+{% endblock %}
+
+{% block contenido %}
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+<div class="card">
+  <div class="card-body">
+	<div class="row">
+  		<div class="col">
+    		<form action="" method="post">
+				{% csrf_token %}
+				<table>
+					{{ form }}
+				</table>
+				<input type="submit" value="Agregar" />
+			</form>
+ 		 </div>
+  		<div class="col">
+   		 <form action="" method="post">
+			 {% csrf_token %}
+			 <table>
+				 {{ tarjetas_form }}
+			 </table>
+			 <table>
+				 <select class="form-select"  name= "identficador_t" size="" aria-label="">
+					 <option selected> Select fase </option>
+					 {% for item in listar_F %}
+					 	<option>{{ item.nombre_fases }}</option>
+					 {% endfor %}
+				 </select>
+				 {% for item in listar_F %}
+					  <input type="hidden" name="tag" value="{{ item.id_fases }}" />
+					 {% endfor %}
+			 </table>
+			 <table>
+				 <input type="submit" value="Agregar" />
+			 </table>
+		 </form>
+ 		 </div>
+	</div>
+  </div>
+</div>
+	<div class="album py-5 bg-light">
+		<div class="container">
+			<div class="row">
+				{% for item in listar_F %}
+				<div class="card card-4" style="width: 18rem;">
+				  <div class="card-header">
+					<h5>{{ item.nombre_fases }}</h5>
+				  </div>
+					<div class="card">
+				  	<ul class="list-group list-group-flush">
+						<form class="form-inline">
+					 		<li class="list-group-item">aqui se van listar tarjetas</li>
+						</form>
+				 	 </ul>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block jquery %}
+	<script>
+		// Espera que la página cargue (importante usando jquery)
+        $(document).ready(function () {
+            // Cuando se triggerea el evento de mostrar modal
+            $('#borrarTablero').on('show.bs.modal', function (event) {
+                // Guarda el botón en una variable
+                let button = $(event.relatedTarget);
+                // Estira los datos necesarios de ese boton
+                let nombre = button.data('nombre');
+                let borrarUrl = button.data('url-borrar')
+
+	            // Para este ejemplo no solo editamos el cuerpo y la url de un boton sino el titulo también
+	            let modal = $(this)
+	            modal.find('.modal-title').text('Eliminar tablero')
+                modal.find('.modal-body').text('¿Está seguro de borrar el tablero ' + nombre + '?')
+	            modal.find('#confirmarBorrar').attr("href", borrarUrl)
+            })
+        });
+	</script>
+
+{% endblock %}
+
