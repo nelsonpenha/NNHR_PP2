@@ -74,16 +74,32 @@ class FasesForm(ModelForm):
         }
 class TarjetasForm(ModelForm):
 
-    # descripcion = forms.CharField(widget=forms.Textarea(attrs={'rows': 2}))
+    nombre_tarjeta = forms.CharField(max_length=256, min_length=5, widget=forms.TextInput(attrs={
+        'class': 'form-control col-lg-6'
+    }))
 
     class Meta:
+        requiredMessage = 'Este campo es requerido'
         model = Tarjeta
-        fields = ['nombre_tarjeta']
+        fields = ['nombre_tarjeta','fecha_limite']
         widgets = {
-            'nombre_tarjeta': forms.TextInput(
+            'nombre': forms.TextInput(
                 attrs={
                     'class': 'form-control col-lg-6'
                 }
             ),
+
+            'fecha_limite': forms.DateInput(
+                format=('%m/%d/%Y'),
+                attrs={'class':'form-control', 'placeholder':'Select a date', 'type':'date'}
+            ),
+
+
+        }
+        error_messages = {
+            'nombre': {
+                'required': requiredMessage,
+            },
+
 
         }

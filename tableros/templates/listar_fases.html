@@ -2,9 +2,9 @@
 
 {% block titulo %}
 	<div class="container">
-		{% for item in lista_tablero_id %}
+	<!--	{% for item in lista_tablero_id %}
 			<h1 align="center">{{ item.nombre }}</h1>
-		{% endfor %}
+		{% endfor %}-->
 		<p class="lead">¡Buenas, usuario! 👋 Aquí tiene las fases activas del tablero</p>
 	</div>
 {% endblock %}
@@ -13,33 +13,62 @@
     {% if message %}
         <div>{{ message }}</div>
     {% endif %}
-	<div class="album py-5 bg-light">
-		<div class="container">
-			<div class="row">
-				<form action="" method="post">
-       				 {% csrf_token %}
-      				  <table>
-       					 	{{ form }}
-       				 </table>
-       				 <input type="submit" value="Agregar" />
-				</form>
-			</div>
-		</div>
+<div class="card">
+  <div class="card-body">
+	<div class="row">
+  		<div class="col">
+    		<form action="" method="post">
+				{% csrf_token %}
+				<table>
+					{{ form }}
+				</table>
+				<input type="submit" value="Agregar" />
+			</form>
+ 		 </div>
+  		<div class="col">
+   		 <form action="" method="post">
+			 {% csrf_token %}
+			 <table>
+				 {{ tarjetas_form }}
+			 </table>
+			 <table>
+				 <select class="form-select"  name= "identficador_t" size="" aria-label="">
+					 <option selected> Select fase </option>
+					 {% for item in listar_F %}
+					 	<option>{{ item.nombre_fases }}</option>
+					 {% endfor %}
+				 </select>
+				 {% for item in listar_F %}
+					  <input type="hidden" name="tag" value="{{ item.id_fases }}" />
+				 {% endfor %}
+			 </table>
+			 <table>
+				 <input type="submit" value="Agregar" />
+			 </table>
+		 </form>
+ 		 </div>
 	</div>
+  </div>
+</div>
 	<div class="album py-5 bg-light">
 		<div class="container">
 			<div class="row">
 				{% for item in listar_F %}
-				<div class="card" style="width: 13rem;">
+				<div class="card card-4" style="width: 18rem;">
 				  <div class="card-header">
 					<h5>{{ item.nombre_fases }}</h5>
 				  </div>
-				  <ul class="list-group list-group-flush">
-					<form class="form-inline">
-					  <input class="form-control mr-sm-2" type="search" placeholder="Agregar Tarjeta" aria-label="Aceptar">
-					  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Aceptar</button>
-					</form>
-				  </ul>
+					<div class="card">
+				  	<ul class="list-group list-group-flush">
+						<form class="form-inline">
+							{% for item in listar_t %}
+
+								<li class="list-group-item">{{ item.nombre_tarjeta }}</li>
+				 			{% endfor %}
+
+						</form>
+				 	 </ul>
+					</div>
 				</div>
 				{% endfor %}
 			</div>

@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.contrib import messages
 from tableros.forms import TableroForm, FasesForm,TarjetasForm
-from tableros.models import Tablero, Fases
+from tableros.models import Tablero, Fases, Tarjeta
 
 
 @login_required
@@ -93,22 +93,45 @@ def eliminarTablero(request, eliminarId):
 
 def crear_fases(request,tablero_id):
     # Recuperamos la instancia
-    list_fase = Fases.objects.filter(id_tablero_id= tablero_id, estado= 'Activo')
-    list_tablero = Tablero.objects.filter(id_tablero=tablero_id)
-    instancia_fase = Tablero.objects.get(id_tablero=tablero_id)
-    id_valor=instancia_fase.id_tablero
+    list_fase = Fases.objects.filter(id_tablero_id=tablero_id, estado='Activo')
+    tarjeta_list = Tarjeta.objects.filter(id_fases__in=list_fase, estado='Activo')
+    #list_tablero = Tablero.objects.filter(id_tablero=tablero_id)
+    instancia_tablero = Tablero.objects.get(id_tablero=tablero_id)
+    #id_valor=instancia_tablero.id_tablero
+
+
     if request.method == 'POST':
+
+        tarjetas_form = TarjetasForm(request.POST)
         fases_form = FasesForm(request.POST)
-        print('Estoy almacenando')
+
+        #print(tarjetas_form)
+        print(fases_form)
+
+        if tarjetas_form.is_valid():
+            t = tarjetas_form.save(commit=False)
+            t.id_usuario ='1'
+            t.id_fases = request.POST.get("tag")
+            print(t.id_fases)
+            t.save()
+            return render(request, "listar_fases.html", {'form': fases_form, 'tarjetas_form': tarjetas_form,
+                                                         'listar_t': tarjeta_list, 'listar_F': list_fase
+                                                         })
+
+
         if fases_form.is_valid():
             print('Datos validos')
             fases = fases_form.save(commit=False)
             fases.id_usuario ='1'
-            fases.id_tablero = instancia_fase
+            fases.id_tablero = instancia_tablero
             fases.save()
             form = FasesForm()
-            return render(request, "listar_fases.html", {'form': form, 'listar_F': list_fase, 'lista_tablero_id': list_tablero})
+            return render(request, "listar_fases.html", {'form': fases_form, 'tarjetas_form': tarjetas_form,
+                                                         'listar_t': tarjeta_list, 'listar_F': list_fase})
     else:
-        form = FasesForm()
-    return render(request, "listar_fases.html", {'form': form,'listar_F': list_fase, 'lista_tablero_id': list_tablero})
+        fases_form = FasesForm()
+        tarjetas_form=TarjetasForm()
+    return render(request, "listar_fases.html",{'form': fases_form, 'tarjetas_form': tarjetas_form,
+                                                         'listar_t': tarjeta_list, 'listar_F': list_fase})
+
 
