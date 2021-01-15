@@ -8,25 +8,32 @@
 <body>
   <div class="login">
     <div class="login-screen">
-      <div class="app-title">
-        <h1>Iniciar Sesión</h1>
-      </div>
 
-      <div class="login-form">
-        <div class="control-group">
-        <input type="text" class="login-field" required="true"value="" placeholder="usuario" id="login-name">
-        <label class="login-field-icon fui-user" for="login-name"></label>
+        <div class="app-title">
+            <h1>Iniciar Sesión</h1>
         </div>
 
-        <div class="control-group">
-        <input type="password" class="login-field" required="true" value="" placeholder="contraseña" id="login-pass">
-        <label class="login-field-icon fui-lock" for="login-pass"></label>
-        </div>
+        <form class="login-form" method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
 
-        <a class="btn btn-primary btn-large btn-block" href="http://127.0.0.1:8000/accounts/principal/">INICIAR</a>
-        <a class="login-link" href="http://127.0.0.1:8000/accounts/recuperar/">¿Olvidaste tu contraseña?</a>
-        <a class="login-link" href="http://127.0.0.1:8000/accounts/registrarse/"> Registrarse</a>
-      </div>
+            <div class="control-group">
+                {{ form.username.errors }}
+                <label class="login-field-icon fui-user" for="{{ form.username.id_for_label }}">{{ form.username.label_tag }}</label>
+                {{ form.username }}
+            </div>
+
+            <div class="control-group">
+                {{ form.password.errors }}
+                <label class="login-field-icon fui-user" for="{{ form.password.id_for_label }}">{{ form.password.label_tag }}</label>
+                {{ form.password }}
+            </div>
+
+            <input class="btn btn-primary btn-large btn-block" type="submit" value="Ingresar">
+            <input type="hidden" name="next" value="/tableros/principal">
+    {#        <a class="login-link" href="http://127.0.0.1:8000/accounts/recuperar/">¿Olvidaste tu contraseña?</a>#}
+    {#        <a class="login-link" href="http://127.0.0.1:8000/accounts/registrarse/"> Registrarse</a>#}
+      </form>
     </div>
   </div>
 </body>
