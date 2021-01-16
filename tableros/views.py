@@ -106,7 +106,7 @@ def crear_fases(request,tablero_id):
             instance_fase = Fases.objects.get(id_fases=fase_id)
 
             t = tarjetas_form.save(commit=False)
-            t.id_usuario ='1'
+            t.id_usuario = request.user.id
             t.id_fases = instance_fase
             t.save()
             return render(request, "listar_fases.html", {'form': fases_form, 'tarjetas_form': tarjetas_form,
@@ -116,7 +116,7 @@ def crear_fases(request,tablero_id):
         if fases_form.is_valid():
             print('Datos validos')
             fases = fases_form.save(commit=False)
-            fases.id_usuario ='1'
+            fases.id_usuario = request.user.id
             fases.id_tablero = instancia_tablero
             fases.save()
             form = FasesForm()

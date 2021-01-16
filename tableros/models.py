@@ -225,6 +225,7 @@ class Tarjeta(models.Model):
     fecha_registro = models.DateField(default=datetime.now)
     fecha_limite = models.DateField(auto_now=False, auto_now_add=False)
     nombre_tarjeta = models.CharField(max_length=256)
+    id_usuario = models.IntegerField()
     id_fases = models.ForeignKey(Fases, on_delete=models.CASCADE)
     estado = models.CharField(max_length=15, choices=ESTADOS_TARJETA, default='Activo')
 
