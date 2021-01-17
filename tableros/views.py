@@ -95,6 +95,8 @@ def crear_fases(request,tablero_id):
     # Recuperamos la instancia
     instancia_tablero = Tablero.objects.get(id_tablero=tablero_id)
     list_fase = Fases.objects.filter(id_tablero=tablero_id, estado='Activo')
+    fases_form = FasesForm()
+    tarjetas_form = TarjetasForm()
 
     if request.method == 'POST':
 
@@ -129,3 +131,34 @@ def crear_fases(request,tablero_id):
                                                          'listar_F': list_fase, 'tablero': instancia_tablero})
 
 
+def config_tarjeta(request,cambio_id,tableroId):
+
+    instancia = Tarjeta.objects.get(id_tarjeta=cambio_id)
+    list_fase = Fases.objects.filter(id_tablero=tableroId, estado='Activo')
+
+    form = TarjetasForm(instance=instancia)
+
+    if request.method == "POST":
+
+        form = TarjetasForm(request.POST, instance=instancia)
+
+        if form.is_valid():
+
+
+            fase_id = request.POST.get("id_fase_nuevo")
+            instance_fase = Fases.objects.get(id_fases=fase_id)
+            print(instance_fase)
+
+            instancia = form.save(commit=False)
+            instancia.id_usuario = request.user.id
+            instancia.id_fases = instance_fase
+            instancia.save()
+
+            # pasamos el mensaje de guardado con éxito al request
+            request.session['form_message'] = "Guardado exitosamente"
+
+            # volvemos al inicio
+            return HttpResponseRedirect(reverse('index'))
+
+    # Si llegamos al final renderizamos el formulario
+    return render(request, "config_tarjeta.html", {'form': form,'listar_fases': list_fase})

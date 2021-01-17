@@ -51,14 +51,20 @@
 				{% for item in listar_F %}
 				<div class="card card-4" style="width: 18rem;">
 				  <div class="card-header">
-					<h5>{{ item.nombre_fases }}</h5>
+					<h5>{{ item.nombre_fases }}
+
+					</h5>
+
 				  </div>
 					<div class="card">
 				  	<ul class="list-group list-group-flush">
 						<form class="form-inline">
 							{% for tarjeta in item.tarjeta_set.all %}
 
-								<li class="list-group-item">{{ tarjeta.nombre_tarjeta }}</li>
+								<li class="list-group-item">{{ tarjeta.nombre_tarjeta }}
+									<a href="/tableros/config_tarjeta/{{ tarjeta.id_tarjeta }}/{{ tablero.id_tablero }}" class="card-link">Configurar</a>
+
+								</li>
 				 			{% endfor %}
 
 						</form>

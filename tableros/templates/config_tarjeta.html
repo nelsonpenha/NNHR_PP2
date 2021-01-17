@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+    <div class="container">
+        <h1 class="mt-5">Editar Tablero</h1>
+    </div>
+{% endblock %}
+
+{% block contenido %}
+
+    <div class="container">
+        <div class="card card-4">
+            <div class="card-body">
+                <form action="" method="post">
+                     {% csrf_token %}
+                     <table>
+                         {{ form }}
+                     </table>
+                     <table>
+                         <select class="form-select"  name= "id_fase_nuevo" size="" aria-label="">
+                             <option selected> Select fase </option>
+                             {% for item in listar_fases %}
+                                 <option value="{{ item.id_fases }}">{{ item.nombre_fases }}</option>
+                             {% endfor %}
+                         </select>
+                     </table>
+                     <table>
+                         <input type="submit" value="Agregar" />
+                     </table>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
