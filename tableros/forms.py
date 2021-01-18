@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 from django import forms
 
-from tableros.models import Tablero, Fases, Tarjeta
+from tableros.models import Tablero, Fases, Tarjeta, Tarjeta_Usuario
 
 
 class TableroForm(ModelForm):
@@ -103,3 +103,11 @@ class TarjetasForm(ModelForm):
 
 
         }
+class User_TarjetaForm(ModelForm):
+
+    class Meta:
+
+        model = Tarjeta_Usuario
+        fields = ['id_tarjeta','id_usuario']
+
+

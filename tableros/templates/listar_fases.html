@@ -11,54 +11,60 @@
     {% if message %}
         <div>{{ message }}</div>
     {% endif %}
-<div class="card">
-  <div class="card-body">
-	<div class="row">
-  		<div class="col">
-    		<form action="" method="post">
-				{% csrf_token %}
-				<table>
-					{{ form }}
-				</table>
-				<input type="submit" value="Agregar" />
-			</form>
- 		 </div>
-  		<div class="col">
-   		 <form action="" method="post">
-			 {% csrf_token %}
-			 <table>
-				 {{ tarjetas_form }}
-			 </table>
-			 <table>
-				 <select class="form-select"  name= "identificador_t" size="" aria-label="">
-					 <option selected> Select fase </option>
-					 {% for item in listar_F %}
-                         <option value="{{ item.id_fases }}">{{ item.nombre_fases }}</option>
-					 {% endfor %}
-				 </select>
-			 </table>
-			 <table>
-				 <input type="submit" value="Agregar" />
-			 </table>
-		 </form>
- 		 </div>
+	<div class="card">
+	  <div class="card-body">
+		<div class="row">
+			<div class="col">
+				<form action="" method="post">
+					{% csrf_token %}
+					<table>
+						{{ form }}
+					</table>
+					<input type="submit" value="Agregar" />
+				</form>
+			 </div>
+			<div class="col">
+			 <form action="" method="post">
+				 {% csrf_token %}
+				 <table>
+					 {{ tarjetas_form }}
+				 </table>
+				 <table>
+					 <select class="form-select"  name= "identificador_t" size="" aria-label="">
+						 <option selected> Select fase </option>
+						 {% for item in listar_F %}
+							 <option value="{{ item.id_fases }}">{{ item.nombre_fases }}</option>
+						 {% endfor %}
+					 </select>
+				 </table>
+				 <table>
+					 <input type="submit" value="Agregar" />
+				 </table>
+			 </form>
+			 </div>
+		</div>
+	  </div>
 	</div>
-  </div>
-</div>
 	<div class="album py-5 bg-light">
 		<div class="container">
 			<div class="row">
 				{% for item in listar_F %}
 				<div class="card card-4" style="width: 18rem;">
 				  <div class="card-header">
-					<h5>{{ item.nombre_fases }}</h5>
+					<h5>{{ item.nombre_fases }}
+
+					</h5>
+
 				  </div>
 					<div class="card">
 				  	<ul class="list-group list-group-flush">
 						<form class="form-inline">
 							{% for tarjeta in item.tarjeta_set.all %}
 
-								<li class="list-group-item">{{ tarjeta.nombre_tarjeta }}</li>
+								<li class="list-group-item">{{ tarjeta.nombre_tarjeta }}
+									<a href="/tableros/config_tarjeta/{{ tarjeta.id_tarjeta }}/{{ tablero.id_tablero }}" class="card-link">Configurar</a>
+
+								</li>
 				 			{% endfor %}
 
 						</form>

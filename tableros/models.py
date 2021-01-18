@@ -170,7 +170,7 @@ class Tarjeta_Usuario(models.Model):
 
     id_tarjeta_usuario = models.AutoField(primary_key=True)
     id_tarjeta = models.IntegerField()
-    id_usuario = models.IntegerField()
+    id_usuario = models.ForeignKey(Usuario,on_delete=models.CASCADE)
     estado = models.CharField(max_length=15, choices=ESTADOS_TARJETA_USUARIO, default='Activo')
 
     # QUE DATO DEVUELVE AL INVOCAR A UNA INSTANCIA DE Tarjeta_Usuario SIN ACCEDER A UN ATRIBUTO ESPECÍFICO
