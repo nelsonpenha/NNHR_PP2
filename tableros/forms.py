@@ -72,6 +72,8 @@ class FasesForm(ModelForm):
             ),
 
         }
+
+
 class TarjetasForm(ModelForm):
 
     nombre_tarjeta = forms.CharField(max_length=256, min_length=5, widget=forms.TextInput(attrs={
@@ -103,11 +105,12 @@ class TarjetasForm(ModelForm):
 
 
         }
+
+
 class User_TarjetaForm(ModelForm):
 
     class Meta:
-
         model = Tarjeta_Usuario
-        fields = ['id_tarjeta','id_usuario']
+        fields = ['id_tarjeta', 'id_usuario']
 
 

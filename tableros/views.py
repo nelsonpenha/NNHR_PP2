@@ -1,10 +1,11 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib import messages
 from tableros.forms import TableroForm, FasesForm, TarjetasForm, User_TarjetaForm
-from tableros.models import Tablero, Fases, Tarjeta, Usuario
+from tableros.models import Tablero, Fases, Tarjeta, Tarjeta_Usuario
 
 
 @login_required
@@ -130,18 +131,19 @@ def crear_fases(request,tablero_id):
                                                          'listar_F': list_fase, 'tablero': instancia_tablero})
 
 
-def config_tarjeta(request,cambio_id,tableroId):
+def config_tarjeta(request, cambio_id, tablero_id):
 
     instancia = Tarjeta.objects.get(id_tarjeta=cambio_id)
-    usuario_lista = Usuario.objects.filter(estado='Activo')
-    list_fase = Fases.objects.filter(id_tablero=tableroId, estado='Activo')
-    form = TarjetasForm(instance=instancia)
-    form_ut = User_TarjetaForm()
+    tarjeta_usuario = Tarjeta_Usuario.objects.filter(id_tarjeta=cambio_id)
+    lista_encargados = [o.id_usuario for o in tarjeta_usuario]
+    usuario_lista = User.objects.filter(is_active=True).exclude(id__in=[le.id for le in lista_encargados])
+    list_fase = Fases.objects.filter(id_tablero=tablero_id, estado='Activo')
 
     if request.method == "POST":
 
         form = TarjetasForm(request.POST, instance=instancia)
         form_ut = User_TarjetaForm(request.POST)
+        user_id = request.POST.get("id_usuario_nuevo")
 
         if form.is_valid():
             fase_id = request.POST.get("id_fase_nuevo")
@@ -155,14 +157,14 @@ def config_tarjeta(request,cambio_id,tableroId):
 
             return render(request, "config_tarjeta.html", {'usuario_t':form_ut,'form': form, 'listar_fases': list_fase,
                                                            'listar_usuario': usuario_lista, 'tarjeta': instancia})
-        if form_ut.is_valid():
-            user_id = request.POST.get("id_usuario_nuevo")
-            instance_usuario = Usuario.objects.get(id_usuario=user_id)
+        if user_id:
+            instance_usuario = User.objects.get(id=user_id)
             print("usuario id", instance_usuario)
             print('Datos validos')
-            tarjeta_usuario = form_ut.save(commit=False)
+            tarjeta_usuario = Tarjeta_Usuario()
             tarjeta_usuario.id_usuario = instance_usuario
             tarjeta_usuario.id_tarjeta = cambio_id
+            #tarjeta_usuario.estado = 'Activo'
             tarjeta_usuario.save()
             return HttpResponseRedirect(reverse('index'))
         else:
@@ -170,9 +172,9 @@ def config_tarjeta(request,cambio_id,tableroId):
                           {'usuario_t': form_ut, 'form': form, 'listar_fases': list_fase,
                            'listar_usuario': usuario_lista, 'tarjeta': instancia})
 
-
     else:
         form = TarjetasForm()
         form_ut = User_TarjetaForm()
-        return render(request, "config_tarjeta.html", {'usuario_t':form_ut,'form': form, 'listar_fases': list_fase,
-                                                       'listar_usuario': usuario_lista, 'tarjeta': instancia})
+        return render(request, "config_tarjeta.html", {'usuario_t': form_ut, 'form': form, 'listar_fases': list_fase,
+                                                       'listar_usuario': usuario_lista, 'tarjeta': instancia,
+                                                       'lista_encargados': lista_encargados})

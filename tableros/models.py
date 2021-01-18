@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -170,7 +171,7 @@ class Tarjeta_Usuario(models.Model):
 
     id_tarjeta_usuario = models.AutoField(primary_key=True)
     id_tarjeta = models.IntegerField()
-    id_usuario = models.ForeignKey(Usuario,on_delete=models.CASCADE)
+    id_usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     estado = models.CharField(max_length=15, choices=ESTADOS_TARJETA_USUARIO, default='Activo')
 
     # QUE DATO DEVUELVE AL INVOCAR A UNA INSTANCIA DE Tarjeta_Usuario SIN ACCEDER A UN ATRIBUTO ESPECÍFICO
@@ -180,7 +181,7 @@ class Tarjeta_Usuario(models.Model):
     # CONFIGURACIONES EXTRA QUE PUEDEN REALIZARSE SOBRE LA CLASE Tarjeta_Usuario
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['id_tarjeta', 'id_usuario', 'estado'],
+            models.UniqueConstraint(fields=['id_tarjeta', 'id_usuario'],
                                     name='unique_idtarjetaidusuario_tarjeta_usuario'),
 
         ]

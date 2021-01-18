@@ -37,7 +37,7 @@
                                 <select class="form-select" name= "id_usuario_nuevo" size="" aria-label="">
                                      <option selected> Seleccionar Usuario</option>
                                      {% for item in listar_usuario %}
-                                         <option value="{{ item.id_usuario }}">{{ item.nombre }} {{ item.apellido }}</option>
+                                         <option value="{{ item.id }}">{{ item.first_name }} {{ item.last_name }}</option>
                                      {% endfor %}
                                 </select>
                              <table>
@@ -59,9 +59,11 @@
           <div class="card-body">
             <h6 align="center" class="card-title">Encargados</h6>
             <p class="card-text">
-                {% for usuario in item.usuario_set.all %}
-                    <li class="list-group-item">{{ usuario.nombre }}{{ usuario.apellido }}</li>
-                {% endfor %}
+                {% if lista_encargados %}
+                    {% for usuario in lista_encargados %}
+                        <li class="list-group-item"><FONT COLOR="black">{{ usuario.first_name }} {{ usuario.last_name }}</FONT></li>
+                    {% endfor %}
+                {% endif %}
             </p>
           </div>
         </div>
