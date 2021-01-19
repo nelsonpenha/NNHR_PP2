@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+    <div class="container">
+        <h1 class="mt-5">Editar Tarjeta</h1>
+    </div>
+{% endblock %}
+
+{% block contenido %}
+<div class="container">
+	<div class="card">
+	  <div class="card-body">
+		<div class="row">
+			<div class="col">
+				<div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+					 <div class="card-body">
+						<form action="" method="post">
+						   <h5 class="card-title">{% csrf_token %} {{ form }}</h5>
+						   <p class="card-text">
+						    <label for="S_fase_nuevo">Selecciona fase</label>
+							   <select name="if_fase_nuevo" id="S_fase_nuevo" required>
+									 <option >
+									 {% for item in listar_fases %}
+                                        <option value="{{ item.id_fases }}">{{ item.nombre_fases }}</option>
+                                     {% endfor %}
+									</option>
+								</select>
+
+						  </p><input type="submit"class="btn btn-dark" value="Agregar" />
+						</form>
+					 </div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+					<div class="row">
+					  <div class="card-body">
+						 <form action="" method="post">
+                            <h5 class="card-title">{% csrf_token %} {{ tarjeta.nombre_tarjeta }}</h5>
+                            <p class="card-text">
+                                <label for="S_usuario_nuevo">Selecciona usuario</label>
+                                <select name="if_usuario_nuevo" id="S_usuario_nuevo" required>
+                                     <option >
+                                     {% for item in listar_usuario %}
+                                        <option value="{{ item.id }}">{{ item.first_name }} {{ item.last_name }}</option>
+                                     {% endfor %}
+                                    </option>
+                                </select>
+                           </p><input type="submit"class="btn btn-dark" value="Agregar" />
+                        </form>
+					  </div>
+					</div>
+				</div>
+			</div>
+  		</div>
+	  </div>
+  	</div>
+</div>
+<div class="container">
+    <h1 class="mt-5">   </h1>
+</div>
+  <div class="container">
+        <div class="card border-info mb-3" style="max-width: 18rem;">
+          <div class="card-header card text-white bg-info mb-3" align="center">Encargados</div>
+          <div class="card-body">
+            <p class="card-text">
+                {% if lista_encargados %}
+                    {% for usuario in lista_encargados %}
+                        <li class="list-group-item">{{ usuario.first_name }} {{ usuario.last_name }}</li>
+                    {% endfor %}
+                {% endif %}
+            </p>
+          </div>
+        </div>
+  </div>
+</div>
+{% endblock %}

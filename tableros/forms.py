@@ -1,7 +1,9 @@
+from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelForm
 from django import forms
+from django.contrib.auth.models import User
 
-from tableros.models import Tablero, Fases
+from tableros.models import Tablero, Fases, Tarjeta, Tarjeta_Usuario
 
 
 class TableroForm(ModelForm):
@@ -72,3 +74,61 @@ class FasesForm(ModelForm):
             ),
 
         }
+
+
+class TarjetasForm(ModelForm):
+
+    nombre_tarjeta = forms.CharField(max_length=256, min_length=5, widget=forms.TextInput(attrs={
+        'class': 'form-control col-lg-6'
+    }))
+
+    class Meta:
+        requiredMessage = 'Este campo es requerido'
+        model = Tarjeta
+        fields = ['nombre_tarjeta','fecha_limite']
+        widgets = {
+            'nombre': forms.TextInput(
+                attrs={
+                    'class': 'form-control col-lg-6'
+                }
+            ),
+
+            'fecha_limite': forms.DateInput(
+                format=('%m/%d/%Y'),
+                attrs={'class':'form-control', 'placeholder':'Select a date', 'type':'date'}
+            ),
+
+
+        }
+        error_messages = {
+            'nombre': {
+                'required': requiredMessage,
+            },
+
+
+        }
+
+
+class User_TarjetaForm(ModelForm):
+
+    class Meta:
+        model = Tarjeta_Usuario
+        fields = ['id_tarjeta', 'id_usuario']
+
+
+class RegistrarseForm(UserCreationForm):
+    class Meta:
+        model= User
+        fields=['username',
+                'first_name',
+                'last_name',
+                'email'
+                ]
+        labels={
+            'username': 'Usuario',
+            'first_name':'Nombre',
+            'last_name':'Apellido',
+            'email': 'Correo',
+
+        }
+

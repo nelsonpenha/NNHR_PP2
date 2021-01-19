@@ -18,8 +18,11 @@ from . import views
 
 urlpatterns = [
     path('principal/', views.pagina_principal, name='principal'),
+    path('registrarse/', views.registrarse, name='registrarse'),
     path('crear/', views.crear_tablero, name='crear'),
     path('edit/<int:cambio_id>', views.edit, name='editar'),
-    path('crear_fases/<int:fases_id>', views.crear_fases, name='crear_tablero'),
+    path('listar_fases/<int:tablero_id>', views.crear_fases, name='listar_fases'),
+    path('config_tarjeta/<int:cambio_id>/<int:tablero_id>', views.config_tarjeta, name='config_tarjeta'),
     path('eliminarTablero/<int:eliminarId>', views.eliminarTablero, name='eliminar-tablero'),
+    path('eliminar_fases/<int:fases_id>', views.eliminar_fases, name='eliminar_fases'),
 ]

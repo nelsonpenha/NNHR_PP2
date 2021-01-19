@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -170,7 +171,7 @@ class Tarjeta_Usuario(models.Model):
 
     id_tarjeta_usuario = models.AutoField(primary_key=True)
     id_tarjeta = models.IntegerField()
-    id_usuario = models.IntegerField()
+    id_usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     estado = models.CharField(max_length=15, choices=ESTADOS_TARJETA_USUARIO, default='Activo')
 
     # QUE DATO DEVUELVE AL INVOCAR A UNA INSTANCIA DE Tarjeta_Usuario SIN ACCEDER A UN ATRIBUTO ESPECÍFICO
@@ -180,28 +181,11 @@ class Tarjeta_Usuario(models.Model):
     # CONFIGURACIONES EXTRA QUE PUEDEN REALIZARSE SOBRE LA CLASE Tarjeta_Usuario
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['id_tarjeta', 'id_usuario', 'estado'],
+            models.UniqueConstraint(fields=['id_tarjeta', 'id_usuario'],
                                     name='unique_idtarjetaidusuario_tarjeta_usuario'),
 
         ]
 
-
-class Tarjeta(models.Model):
-    ESTADOS_TARJETA = (
-        ('Activo', 'Activo'),
-        ('Inactivo', 'Inactivo'),
-    )
-
-    id_tarjeta = models.AutoField(primary_key=True)
-    fecha_registro = models.DateField(default=datetime.now)
-    fecha_limite = models.DateField(auto_now=False, auto_now_add=False)
-    nombre_tarjeta = models.CharField(max_length=256)
-    id_usuario = models.IntegerField()
-    estado = models.CharField(max_length=15, choices=ESTADOS_TARJETA, default='Activo')
-
-    # QUE DATO DEVUELVE AL INVOCAR A UNA INSTANCIA DE Tarjeta SIN ACCEDER A UN ATRIBUTO ESPECÍFICO
-    def __unicode__(self):
-        return self.nombre_tarjeta
 
 
 """
@@ -231,6 +215,24 @@ class Fases(models.Model):
     def __unicode__(self):
         return self.nombre_fases
 
+
+class Tarjeta(models.Model):
+    ESTADOS_TARJETA = (
+        ('Activo', 'Activo'),
+        ('Inactivo', 'Inactivo'),
+    )
+
+    id_tarjeta = models.AutoField(primary_key=True)
+    fecha_registro = models.DateField(default=datetime.now)
+    fecha_limite = models.DateField(auto_now=False, auto_now_add=False)
+    nombre_tarjeta = models.CharField(max_length=256)
+    id_usuario = models.IntegerField()
+    id_fases = models.ForeignKey(Fases, on_delete=models.CASCADE)
+    estado = models.CharField(max_length=15, choices=ESTADOS_TARJETA, default='Activo')
+
+    # QUE DATO DEVUELVE AL INVOCAR A UNA INSTANCIA DE Tarjeta SIN ACCEDER A UN ATRIBUTO ESPECÍFICO
+    def __unicode__(self):
+        return self.nombre_tarjeta
 
 """
     # CONFIGURACIONES EXTRA QUE PUEDEN REALIZARSE SOBRE LA CLASE FASES
