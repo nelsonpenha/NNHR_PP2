@@ -39,7 +39,7 @@
                             <h5 class="card-title">{% csrf_token %} {{ tarjeta.nombre_tarjeta }}</h5>
                             <p class="card-text">
                                 <label for="S_usuario_nuevo">Selecciona usuario</label>
-                                <select name="if_usuario_nuevo" id="S_usuario_nuevo" required>
+                                <select name="id_usuario_nuevo" id="S_usuario_nuevo" required>
                                      <option >
                                      {% for item in listar_usuario %}
                                         <option value="{{ item.id }}">{{ item.first_name }} {{ item.last_name }}</option>

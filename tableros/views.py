@@ -146,7 +146,7 @@ def config_tarjeta(request, cambio_id, tablero_id):
         form = TarjetasForm(request.POST, instance=instancia)
         form_ut = User_TarjetaForm(request.POST)
         user_id = request.POST.get("id_usuario_nuevo")
-
+        print(user_id)
         if form.is_valid():
             fase_id = request.POST.get("id_fase_nuevo")
             instance_fase = Fases.objects.get(id_fases=fase_id)
