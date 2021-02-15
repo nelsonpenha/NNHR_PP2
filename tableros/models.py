@@ -190,28 +190,30 @@ class Tarjeta(models.Model):
     ESTADOS_TARJETA = (
         ('Activo', 'Activo'),
         ('Inactivo', 'Inactivo'),
+        ('Pendiente', 'Pendiente'),
     )
 
     id_tarjeta = models.AutoField(primary_key=True)
     fecha_registro = models.DateField(default=datetime.now)
     fecha_limite = models.DateField(auto_now=False, auto_now_add=False)
     nombre_tarjeta = models.CharField(max_length=256)
+    descripcion_tarjeta = models.CharField(max_length=256)
     id_usuario = models.IntegerField()
     estado = models.CharField(max_length=15, choices=ESTADOS_TARJETA, default='Activo')
+    identificador_tablero = models.IntegerField()
 
     # QUE DATO DEVUELVE AL INVOCAR A UNA INSTANCIA DE Tarjeta SIN ACCEDER A UN ATRIBUTO ESPECÍFICO
     def __unicode__(self):
         return self.nombre_tarjeta
 
-
-"""
     # CONFIGURACIONES EXTRA QUE PUEDEN REALIZARSE SOBRE LA CLASE Tarjeta
     class Meta:
         constraints = [
             models.UniqueConstraint(fields=['id_tarjeta', 'id_usuario', 'estado'], name='unique_idtarjetaidusuario_tarjeta'),
 
         ]
-"""
+
+
 
 
 class Fases(models.Model):

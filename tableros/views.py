@@ -108,3 +108,19 @@ def crear_fases(request,fases_id):
     else:
         form = FasesForm()
     return render(request, "crear_fases.html", {'form': form})
+
+def crear_tarjeta(request,tarjeta_id):
+    instancia_tarjeta = Tablero.objects.get(id_tablero=tarjeta_id)
+
+    if request.method == 'POST':
+        tarjeta_form = FasesForm(request.POST)
+        print('Estoy almacenando')
+        if tarjeta_form.is_valid():
+            tarjetas = tarjeta_form.save(commit=False)
+            tarjetas.id_usuario ='1'
+            tarjetas.id_tablero = instancia_tarjeta
+            tarjetas.save()
+            return HttpResponseRedirect(reverse('index'))
+    else:
+        instancia_tarjeta = FasesForm()
+    return render(request, "crear_tarjeta.html", {'formulario': instancia_tarjeta})

@@ -22,4 +22,6 @@ urlpatterns = [
     path('edit/<int:cambio_id>', views.edit, name='editar'),
     path('crear_fases/<int:fases_id>', views.crear_fases, name='crear_tablero'),
     path('eliminarTablero/<int:eliminarId>', views.eliminarTablero, name='eliminar-tablero'),
+   # path('crear_tarjeta/<int:tarjeta_id>', views.crear_tarjeta, name='crear_tablero'),
+    path('crear_tarjeta/<int:tarjeta_id>', views.crear_tarjeta, name='crear_tarjeta'),
 ]
